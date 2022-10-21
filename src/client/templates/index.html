@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+Sleepy Search
+{% endblock %}
+{% block content %}
+<div class='container'>
+        <p>
+        Welcome to Sleepy Search.
+        </p>
+        {% if not props['user'] %}
+        <a class='content-link' href="{{url_for("pages.login")}}">
+                <span class=link-text>Please login</span>
+        </a>
+        {% endif %}
+</div>
+{% endblock %}

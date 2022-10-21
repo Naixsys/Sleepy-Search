@@ -1,0 +1,49 @@
+<html>
+        <head>
+                <title>{% block title %}{% endblock %}</title>
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+                <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        </head>
+        <body>
+        <nav class="navbar">
+                <ul class="navbar-nav">
+
+                        <li class='nav-item'>
+                                <a class="nav-link" href="{{url_for("pages.home")}}">
+                                        <img class 'logo' src="{{url_for('static', filename='logo.png')}}">
+                                        <span class="nav-link-text">Home</span>
+                                </a>
+                        <li class='nav-item'>
+                                <a class="nav-link" href="{{url_for("pages.dashboard")}}">
+                                        <span class="nav-link-text">Dashboard</span>
+                                </a>
+                        </li>
+                        {% if props['user'] %}
+                        <li class='nav-item'>
+                                <a class="nav-link" href="{{url_for("pages.logout")}}">
+                                        <span class="nav-link-text">Logout</span>
+                                </a>
+                        </li>
+                        {% else %}
+                        <li class='nav-item'>
+                                <a class="nav-link" href="{{url_for("pages.login")}}">
+                                        <span class="nav-link-text">Login</span>
+                                </a>
+                        </li>
+                        <li class='nav-item'>
+                                <a class="nav-link" href="{{url_for("pages.signup")}}">
+                                        <span class="nav-link-text">Sign-up</span>
+                                </a>
+                        </li>
+                        {% endif %}
+                        {% block extra_nav %}
+                        {% endblock %}
+                </ul>
+        </nav>
+        <main>
+        {% block content %}
+        {% endblock %}
+        </main>
+        </body>
+</html>
