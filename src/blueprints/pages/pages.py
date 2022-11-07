@@ -150,6 +150,13 @@ def account():
 
     return response
 
+@pages.route("/about/")
+def about_us():
+    props = {
+            }
+    response = render_template('about.html', props=props)
+    return response
+
 @pages.route("/error/")
 def error():
     response = render_template('error.html', props=props)

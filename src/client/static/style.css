@@ -9,7 +9,8 @@
         --hover-scale: 1.1;
         --border-size: 0.1rem;
         --padding-size: 0.1rem;
-        font-size: 1.5em;
+        --anim-time: 500ms;
+        font-size: 1.8em;
         font-family: Monospace, sans-serif;
 }
 body {
@@ -24,8 +25,19 @@ p {
         color: var(--text-main);
 }
 
+/*Temp  rule for now*/
+label {
+
+        color: var(--text-main);
+}
+
 form {
         max-width: 500px;
+}
+
+.welcome-message {
+        display: flex;
+        justify-items: center;
 }
 
 .field {
@@ -44,7 +56,7 @@ form {
         background: var(--accent);
         transform: scaleX(0);
         transform-origin: 0%;
-        transition: transform 500ms ease;
+        transition: transform var(--anim-time) ease;
         top: 2px;
 }
 
