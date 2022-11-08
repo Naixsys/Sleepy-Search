@@ -16,14 +16,14 @@ Sleepy Search
         </div>
 </form>
 </div>
+{% if props['posts']%}
 <div class='container' class='img-gallery-container'>
-        {% if props['posts']%}
         <ul class='img-gallery'>
                 {% for post in props['posts']%}
                 <img src="{{post.filepath}}" class='img-gallery-content' alt="{{post.alttext}}">
 
                 {% endfor %}
         </ul>
-        {% endif %}
 </div>
+{% endif %}
 {% endblock %}
