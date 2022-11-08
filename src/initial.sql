@@ -18,5 +18,5 @@ CREATE TABLE IF NOT EXISTS posts (
 
 CREATE TABLE IF NOT EXISTS tags (
         "tag_id" INTEGER PRIMARY KEY,
-        "tag_name" TEXT NOT NULL
+        "tag_name" VARCHAR(256) NOT NULL
 );
