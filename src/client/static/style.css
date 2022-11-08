@@ -7,9 +7,11 @@
         --invalid: crimson;
         --text-secondary: rgb(1,1,1);
         --hover-scale: 1.1;
-        --border-size: 0.1rem;
+        --border-size: 0.5rem;
         --padding-size: 0.1rem;
-        --anim-time: 500ms;
+        --primary-anim-time: 100ms;
+        --secondary-anim-time: 500ms;
+        --border-radius: 0.25rem;
         font-size: 1.8em;
         font-family: Monospace, sans-serif;
 }
@@ -18,8 +20,13 @@ body {
         font-size: 100%;
         margin: 0;
         padding: 0;
+        width: clamp(200px, 95%, 3840px);
+        height: clamp(200px, 95%, 2160px);
 }
 
+div {
+        margin-left: 1rem;
+}
 
 p {
         color: var(--text-main);
@@ -33,17 +40,36 @@ label {
 
 form {
         max-width: 500px;
+        padding: var(--padding-size);
+}
+
+body::-webkit-scrollbar {
+        width:0.25rem;
+}
+
+body::-webkit-scrollbar-track {
+        background: var(--nav-bg-main);
+}
+
+body::-webkit-scrollbar-thumb {
+        background: var(--nav-bg-secondary);
+
+}
+
+main {
+        margin-left: 5rem;
 }
 
 .welcome-message {
         display: flex;
-        justify-items: center;
+        justify-content: center;
+        padding: var(--padding-size);
 }
 
 .field {
         width: 100%;
         position: relative;
-        border-bottom: var(--border-size) dashed var(--text-main);
+        border-bottom: 5px dashed var(--text-main);
         margin: 4rem auto 1rem;
 }
 
@@ -56,7 +82,7 @@ form {
         background: var(--accent);
         transform: scaleX(0);
         transform-origin: 0%;
-        transition: transform var(--anim-time) ease;
+        transition: transform var(--secondary-anim-time) ease;
         top: 2px;
 }
 
@@ -75,8 +101,8 @@ form {
         border: none;
         overflow: hidden;
         margin: 0;
-        width 100%;
-        padding 0.25rem 0;
+        width: 100%;
+        padding: 0.25rem 0;
         background: none;
         color: var(--accent);
         font-size: 1.2rem;
@@ -96,6 +122,7 @@ form {
         font-size: 1.8rem;
         font-weight: bold;
         background: var(--accent);
+        border-radius: var(--border-radius);
 }
 
 .form_label {
@@ -119,7 +146,7 @@ form {
 .content-link:hover {
         border: solid var(--border-size) var(--text-main);
         padding: var(--padding-size);
-        border-radius: 0.25rem;
+        border-radius: var(--border-radius) ;
 }
 
 .content {
@@ -127,24 +154,21 @@ form {
         padding: var(--padding-size);
 }
 
-
-body::-webkit-scrollbar {
-        width:0.25rem;
+.search-bar {
+        border: solid calc(var(--border-size) - 10px) var(--accent);
+        border-radius: var(--border-radius);
+        width: auto;
+        display: flex;
+        justify-content: center;
+        transition: border var(--primary-anim-time) ease;
 }
 
-body::-webkit-scrollbar-track {
-        background: var(--nav-bg-main);
+.search-bar:focus-within {
+
+        border: dashed var(--border-size) var(--accent);
 }
 
-body::-webkit-scrollbar-thumb {
-        background: var(--nav-bg-secondary);
 
-}
-
-main {
-        margin-left: 5rem;
-        width: clamp(200px, 100%, 1600px);
-}
 
 .navbar {
         z-index: 1;
@@ -179,13 +203,11 @@ main {
         width: 100%;
 }
 
-/*.nav-item:last-child {
-        margin-top: 200%;
-}*/
 
 .nav-item:hover {
         background: var(--nav-bg-secondary);
         transform: scale(var(--hover-scale));
+        border-radius: var(--border-radius);
 }
 
 .nav-link {
@@ -204,7 +226,7 @@ main {
         margin-right: 1rem;
 }
 
-.nav-link img {
+.nav-link .logo{
         min-width: 2rem;
         margin: 0 1.5rem;
 }

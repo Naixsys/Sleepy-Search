@@ -3,14 +3,18 @@
 Sleepy Search
 {% endblock %}
 {% block content %}
-<div class='search-bar'>
-        <label for='search'>🔍:</label>
-        <input type='text' name='search'>
-</div>
 <div class='welcome-message'>
         <p>
         Welcome to Sleepy Search.
         </p>
+</div>
+<div class='search-bar'>
+<form action="/search" method="get">
+        <div class="field">
+        <label class="form_label" for='query'>🔎</label>
+        <input class="form_input" placeholder="Search anything..." type='text' name='query'>
+        </div>
+</form>
 </div>
 <div class='container' class='img-gallery-container'>
         {% if props['posts']%}

@@ -105,6 +105,10 @@ def signup():
 
 @pages.route("/dashboard/", methods=['POST', 'GET'])
 def dashboard():
+    props = {
+
+    }
+    response = render_template('dashboard.html', props=props)
     return response
 
 @pages.route("/account/", methods=['POST', 'GET', 'DELETE'])
