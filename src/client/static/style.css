@@ -9,6 +9,7 @@
         --hover-scale: 1.1;
         --border-size: 0.5rem;
         --padding-size: 0.1rem;
+        --margin-size: 1rem;
         --primary-anim-time: 100ms;
         --secondary-anim-time: 500ms;
         --border-radius: 0.25rem;
@@ -60,7 +61,7 @@ main {
         margin-left: 5rem;
 }
 
-.welcome-message {
+.message-banner {
         display: flex;
         justify-content: center;
         padding: var(--padding-size);
@@ -152,6 +153,15 @@ main {
 .content {
         border: solid var(--border-size) var(--accent);
         padding: var(--padding-size);
+}
+
+.container {
+        padding: var(--padding-size);
+        border: solid calc(var(--border-size) - 10px) var(--accent);
+        border-radius: var(--border-radius);
+        width: auto;
+        display: flex;
+        justify-content: center;
 }
 
 .search-bar {
