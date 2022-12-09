@@ -4,3 +4,4 @@ secret_key = "very_super_secret_key_here_no_steal"
 template_folder = 'client/templates/'
 static_folder = 'client/static/'
 content_folder = 'content/'
+about_us = "Sleepy Search is an image tagging system used for managing multi-media"

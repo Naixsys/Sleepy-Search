@@ -8,6 +8,7 @@ from flask import (
 )
 
 from utils.account import make_account, update_account, load_account, Account
+from config import about_us
 
 pages = Blueprint('pages', __name__)
 
@@ -155,9 +156,12 @@ def account():
     return response
 
 @pages.route("/about/")
-def about_us():
+def about():
     props = {
+            'about_us': about_us
             }
+
+    print(props)
     response = render_template('about.html', props=props)
     return response
 

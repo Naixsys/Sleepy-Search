@@ -8,4 +8,11 @@ About Us - Sleepy Search
 ABOUT US
 </p>
 </div>
+<div class="container">
+{% if props['about_us'] %}
+<p>
+        {{props['about_us']}}
+</p>
+{% endif %}
+</div>
 {% endblock %}
