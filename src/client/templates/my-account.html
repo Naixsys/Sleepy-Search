@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+<div class="sleepy-form" style="margin-top: 5%;">
+    <form action="" method="POST" id="contactForm">
+        <h5 class="form-heading">Contact Us</h5>
+        <div class="contact-list">
+            <p><i class="fa fa-map-marker"></i> 123 Somewhere Avenue, Kingston 21, Jamaica</p>
+            <p><i class="fa fa-phone"></i> +1-876-123-4567</p>
+            <p><i class="fa fa-envelope"></i> <a href="mailto:sleepysearch@narcolepticsinc.com">sleepysearch@narcolepticsinc.com</a></p>
+        </div>
+        <div>
+            <input type="text" id="subject" name="subject" placeholder="Subject">
+        </div>
+        <div>
+            <input type="email" id="email" name="email" placeholder="Email">
+        </div>
+        <div>
+            <textarea id="inquiry" name="inquiry" placeholder="Your inquiry"></textarea>
+        </div>
+        <div style="margin:20px 0;">
+            <button type="button" class="grey-button">Submit</button>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock %}

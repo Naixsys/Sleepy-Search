@@ -1,0 +1,93 @@
+/*AMATIC_SC*/
+@font-face{
+	font-family: amatic-reg;
+	src: url(../fonts/Amatic_SC/AmaticSC-Regular.ttf);
+}
+
+@font-face{
+	font-family: amatic-bold;
+	src: url(../fonts/Amatic_SC/AmaticSC-Bold.ttf);
+}
+
+/*CHARMONMAN*/
+@font-face{
+	font-family: charmonman-reg;
+	src: url(../fonts/Charmonman/Charmonman-Regular.ttf);
+}
+
+@font-face{
+	font-family: charmonman-bold;
+	src: url(../fonts/Charmonman/Charmonman-Bold.ttf);
+}
+
+/*COMFORTAA*/
+@font-face{
+	font-family: comfortaa-reg;
+	src: url(../fonts/Comfortaa/Comfortaa-Regular.ttf);
+}
+
+@font-face{
+	font-family: comfortaa-light;
+	src: url(../fonts/Comfortaa/Comfortaa-Light.ttf);
+}
+
+@font-face{
+	font-family: comfortaa-bold;
+	src: url(../fonts/Comfortaa/Comfortaa-Bold.ttf);
+}
+
+/*GLORIA HALLELUJAH*/
+@font-face{
+	font-family: gloria;
+	src: url(../fonts/Gloria_Hallelujah/GloriaHallelujah.ttf);
+}
+
+/*HI MELODY*/
+@font-face{
+	font-family: himelody-reg;
+	src: url(../fonts/Hi_Melody/HiMelody-Regular.ttf);
+}
+
+/*INDIE FLOWER*/
+@font-face{
+	font-family: indieflower;
+	src: url(../fonts/Indie_Flower/IndieFlower.ttf);
+}
+
+/*SHADOWS INTO LIGHT*/
+@font-face{
+	font-family: shadows;
+	src: url(../fonts/Shadows_Into_Light/ShadowsIntoLight.ttf);
+}
+
+/*SRISAKDI*/
+@font-face{
+	font-family: srisakdi-reg;
+	src: url(../fonts/Srisakdi/Srisakdi-Regular.ttf);
+}
+
+@font-face{
+	font-family: srisakdi-bold;
+	src: url(../fonts/Srisakdi/Srisakdi-Bold.ttf);
+}
+
+/*KOHO*/
+@font-face{
+	font-family: koho-bold;
+	src: url(../fonts/KoHo/KoHo-Bold.ttf);
+}
+
+@font-face{
+	font-family: koho-bold-italic;
+	src: url(../fonts/KoHo/KoHo-BoldItalic.ttf);
+}
+
+@font-face{
+	font-family: koho-light;
+	src: url(../fonts/KoHo/KoHo-Light.ttf);
+}
+
+@font-face{
+	font-family: koho-light-italic;
+	src: url(../fonts/KoHo/KoHo-LightItalic.ttf);
+}

@@ -3,16 +3,14 @@
 About Us - Sleepy Search
 {% endblock %}
 {% block content %}
-<div class="message-banner">
-<p>
-ABOUT US
-</p>
-</div>
-<div class="container">
 {% if props['about_us'] %}
+<div class="wrapper">
+<div class="information text-white">
+    <h1 class="section-heading">About Us</h1>
 <p>
         {{props['about_us']}}
 </p>
-{% endif %}
 </div>
+</div>
+{% endif %}
 {% endblock %}

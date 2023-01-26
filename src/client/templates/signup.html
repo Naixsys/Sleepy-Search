@@ -3,47 +3,35 @@
 Sleepy Search Signup
 {% endblock %}
 {% block content %}
-<div class='message-banner'>
-<p>
-Please enter fill in your information
-</p>
+<div class="wrapper">
+<div class="sleepy-form">
+    <form action="" method="POST" id="signup-form">
+        <h5 class="form-heading">Registration</h5>
+        <div>
+            <input type="text" id="uname" name="uname" placeholder="Username">
+        </div>
+        <div>
+            <input type="text" id="fname" name="fname" placeholder="First Name">
+        </div>
+        <div>
+            <input type="text" id="lname" name="lname" placeholder="Last Name">
+        </div>
+        <div>
+            <input type="email" id="email" name="email" placeholder="Email">
+        </div>
+        <div style="margin-top:20px;">
+            <input type="text" id="address1" name="address1" placeholder="Address [Line 1]">
+        </div>
+        <div>
+            <input type="text" id="address2" name="address2" placeholder="Address [Line 2]">
+        </div>
+        <div>
+            <input type="text" id="parish" name="parish" placeholder="Parish/State/Province" >
+        </div>
+        <div style="margin:30px 0;">
+            <button type="button" class="grey-button" onClick="window.location.href='login.html'">Submit</button>
+        </div>
+    </form>
 </div>
-<div class='container'>
-<form class='signup' action="#" method="post">
-        <div class='field'>
-        <label class="form_label" for='username'>Username:</label>
-        <input class="form_input" type='text' name='username' required>
-        </div>
-        </br>
-        <div class='field'>
-        <label class="form_label" for='password'>Password:</label>
-        <input class="form_input" type='password' name='password' required>
-        </div>
-        </br>
-<!--
-        <p>Select a Role for this Account:</p>
-        </br>
-
-        <div class='field'>
-        <input class="form_input" type='radio' name='role' id='admin' value='admin' required>
-        <label class="form_label" for='admin'>Admin</label>
-        </div>
-        </br>
-
-        <div class='field'>
-        <input class="form_input" type='radio' name='role' id='poster' value='poster' required>
-        <label class="form_label" for='poster'>Poster</label>
-        </div>
-        </br>
-
-        <div class='field'>
-        <input class="form_input" type='radio' name='role' id='viewer' value='viewer' required>
-        <label class="form_label" for='viewer'>Viewer</label>
-        </div>
-        </br>
--->
-
-        <input class="form_input_submit" type='submit' value='🗳 Sign-up'>
-</form>
 </div>
 {% endblock %}

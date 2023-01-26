@@ -161,8 +161,23 @@ def about():
             'about_us': about_us
             }
 
-    print(props)
     response = render_template('about.html', props=props)
+    return response
+
+@pages.route("/library/")
+def library():
+    props = {
+            }
+
+    response = render_template('library.html', props=props)
+    return response
+
+@pages.route("/contact/")
+def contact():
+    props = {
+            }
+
+    response = render_template('contact.html', props=props)
     return response
 
 @pages.route("/error/")

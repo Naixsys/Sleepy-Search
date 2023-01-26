@@ -3,24 +3,22 @@
 Sleepy Search Login
 {% endblock %}
 {% block content %}
-<div class='message-banner'>
-<p>
-Please enter your login information
-</p>
+<div class="wrapper">
+<div class="sleepy-form">
+    <form action="" method="POST" id="signup-form">
+        <h5 class="form-heading">Log In</h5>
+        <div>
+            <input type="text" id="uname" name="uname" placeholder="Username">
+        </div>
+        <div>
+            <input type="password" id="password" name="password" placeholder="Password">
+        </div>
+        <a href="forget-account.html" class="text-white">I forgot my username or password.</a>
+        <div style="margin:30px 0;">
+            <button type="button" class="grey-button" onClick="window.location.href='my-account.html'">Login</button>
+        </div>
+        <a href="signup.html" class="text-white">Don't have an account? Sign up.</a>
+    </form>
 </div>
-<div class='container'>
-<form class='login' action="#" method="post">
-        <div class='field'>
-        <label class="form_label" for='username'>Username:</label>
-        <input class="form_input" type='text' name='username' required >
-        </div>
-        </br>
-        <div class='field'>
-        <label class="form_label" for='password'>Password:</label>
-        <input class="form_input" type='password' name='password' required>
-        </div>
-        </br>
-        <input class="form_input_submit" type='submit' value='💻 Login'>
-</form>
 </div>
 {% endblock %}
