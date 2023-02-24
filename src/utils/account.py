@@ -1,24 +1,25 @@
-from flask import g, current_app
-from dataclasses import dataclass
+from typing import TypedDict, Optional
+from datetime import datetime
 
 from utils.database import get_cursor, commit
 
-@dataclass
-class Account():
+class Account(TypedDict):
     account_id : int
-    role: int
-    username : str
-    password_hash : str
+    account_username : Optional[str]
+    account_password : Optional[str]
+    account_role : Optional[int]
+    account_created_at: Optional[datetime]
+    account_api_key : Optional[str]
+    account_locked : Optional[bool]
 
-def load_account(account_username: str) -> Account | None:
+
+def load_account(account: Account) -> Account | None:
     try:
         cur = get_cursor()
-        query = "SELECT * FROM accounts where account_username = ?"
-        args = (account_username)
+        query = "SELECT account_id, account_role, account_username, account_password, account_api_key, account_created_at FROM accounts where account_username = ?"
+        args = (account['account_username'],)
         cur.execute(query, args)
-        data = cur.fetchone()
-        account = Account(data['account_id'], data['account_role'], data['account_username'], data['account_password_hash'])
-        print(account)
+        account: Account = cur.fetchone()
         return account
 
     except:
@@ -26,14 +27,14 @@ def load_account(account_username: str) -> Account | None:
 
 def make_account(account: Account) -> bool:
     cur = get_cursor()
-    query = "INSERT INTO accounts (account_username, account_role, account_password_hash) VALUES (?, ?, ?)"
-    args = (account.username, account.role, account.password_hash)
+    query = "INSERT INTO accounts (account_username, account_role, account_password) VALUES (:account_username, :account_role, :account_password)"
+    args = account
     cur.execute(query, args)
     return True if commit() else False
 
 def update_account(account: Account) -> bool:
     cur = get_cursor()
-    query = "UPDATE accounts SET account_username = ?, account_password_hash = ? WHERE account_id = ?"
-    args = (account.username, account.password_hash, account.account_id)
+    query = "UPDATE accounts SET account_username = :account_username, account_password = :account_password WHERE account_id = :account_id"
+    args = account
     cur.execute(query, args)
     return True if commit() else False

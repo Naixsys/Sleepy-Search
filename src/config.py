@@ -5,3 +5,6 @@ template_folder = 'client/templates/'
 static_folder = 'client/static/'
 content_folder = 'content/'
 about_us = "We are Narcoleptics Inc., a company which was formed when we discovered the inefficiencies in the most common multi-media storage and lookup methods leading to lost files and long arduous search times to find important assets. We are the makers of SleepySearch, a software solution to the aforementioned storage and lookup."
+development_mode = True
+max_file_size = 32 * 1024 * 1024
+hash_buffer_size = 64 * 1024

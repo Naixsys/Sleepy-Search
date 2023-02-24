@@ -3,4 +3,87 @@
 Dashboard
 {% endblock %}
 {% block content %}
+<div class='dashboard'>
+
+        <h1 class='text-white' id='dashboard-username'>{{ props['user_info']['account_username'] }}</h1>
+
+        <div class='account-stats'>
+                <div class='dashboard-column'>
+                        <span class='text-white'>Creation Date</span>
+                        <span class='text-white'> {{ props['user_info']['account_created_at'] }} </span>
+                </div>
+                <div class='dashboard-column'>
+                        <span class='text-white'>API Key</span>
+                        <span class='text-white'> {{ props['user_info']['account_api_key']}}</span>
+                </div>
+        </div>
+        <div class='post-control'>
+                <div class='new-post'>
+                <form method="POST" id='new-post-form'>
+
+                        <div class='form-field-container'>
+                                <div class='form-field-text'>
+                                        <p>
+                                        The media you want to submit goes here
+                                        </p>
+                                </div>
+
+                                <div class='form-field-inputs'>
+                                        <label for='file'>File:</label>
+                                        <input name='file' type='file' required>
+                                </div>
+
+                        </div>
+
+
+                        <div class='form-field-container'>
+
+                                <div class='form-field-text'>
+                                        <p>
+                                        The tags you want to put on the post go here.
+                                        </p>
+                                        <p>
+                                        Format the tag list with one tag per line please.
+                                        </p>
+                                </div>
+
+                                <div class='form-field-inputs'>
+                                        <label for='tags'>Tags:</label>
+                                        <input name='tags' type='text' required>
+                                </div>
+
+                        </div>
+
+
+                        <div class='form-field-container'>
+
+                                <div class='form-field-text'>
+                                        <p>
+                                        The description of the post goes here.
+                                        </p>
+                                </div>
+
+                                <div class='form-field-inputs'>
+                                        <label for='description'>Description</label>
+                                        <input id='new-post-description' name='description' type='text'>
+                                </div>
+
+                        </div>
+
+                        <div class='form-field-container'>
+
+                                <div class='form-field-text'>
+                                        <p>
+                                        Only hit submit AFTER you've completed the form
+                                        </p>
+                                </div>
+
+                                <div class='form-field-inputs'>
+                                        <input type='submit' value='Make Post'>
+                                </div>
+                        </div>
+                </form>
+                </div>
+        </div>
+</div>
 {% endblock %}

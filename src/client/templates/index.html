@@ -3,27 +3,38 @@
 Sleepy Search
 {% endblock %}
 {% block content %}
-<div class='message-banner'>
-        <p>
-        Welcome to Sleepy Search.
-        </p>
-</div>
-<div class='search-bar'>
-<form action="/search" method="get">
-        <div class="field">
-        <label class="form_label" for='query'>🔎</label>
-        <input class="form_input" placeholder="Search anything..." type='text' name='query'>
+{% if props['user_info'] %}
+<div class="wrapper">
+<div class="sleepy-form" style="margin-top: 5%;">
+    <form action="/new_post" method="POST" id="contactForm" enctype="multipart/form-data">
+        <h5 class="form-heading">Make New Post</h5>
+        <div>
+            <input type="file" id="file" name="file" placeholder="Tags [separate tags with a comma (,)]">
         </div>
-</form>
+        <div>
+            <input type="text" id="post_tags" name="tags" placeholder="Tags [separate tags with a comma (,)]">
+        </div>
+        <div>
+            <input type="text" id="post_description" name="description" placeholder="Description">
+        </div>
+        <div style="margin:20px 0;">
+            <button type="Submit" class="grey-button">Submit</button>
+        </div>
+    </form>
 </div>
+</div>
+{% endif %}
 {% if props['posts']%}
 <div class='container' class='img-gallery-container'>
-        <ul class='img-gallery'>
                 {% for post in props['posts']%}
-                <img src="{{post.filepath}}" class='img-gallery-content' alt="{{post.alttext}}">
+		        <div class='image-card'>
+                        <div class='imgBox'>
+                                <img src="{{post.filepath}}">
+                                <div class='tag-text'>{{post.tags}}</div>
+                        </div>
+                </div>
 
                 {% endfor %}
-        </ul>
 </div>
 {% endif %}
 {% endblock %}

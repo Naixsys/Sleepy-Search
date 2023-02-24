@@ -7,13 +7,21 @@
 	font-family: koho-light;
 }
 
+:root {
+        --base-bg-col: rgba(202, 207, 210, 0.7);
+        --dashboard-bg-col: rgba(22, 150, 240, 0.9);
+        --dashboard-text-col: #090f44;
+        --dashboard-font-size: 2em;
+        --dashboard-font-style: bold;
+}
+
 body{
     overflow-x: hidden;
-	background-image: url('../images/backgrounds/night-sky2.jpg');
+	background-image: url('assets/backgrounds/night-sky2.jpg');
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
-	background-color: rgba(202, 207, 210, 0.7);
+	background-color: var(--base-bg-col);
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -392,4 +400,56 @@ body{
 
 .contact-list p a{
 	color: inherit;
+}
+
+.dashboard {
+        background-color: var(--dashboard-bg-col);
+        margin: 1em;
+}
+
+#dashboard-username {
+        margin: clamp(10px,1em,40px);
+}
+
+.account-stats {
+    border: 10px solid black;
+    border-radius: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 1em;
+    padding: 1em;
+}
+
+.dashboard-column {
+    column-gap: 1em;
+    display: grid;
+    grid-auto-rows: minmax(1.75em,max-content);
+    grid-template-columns: max-content minmax(150px, 1fr);
+}
+
+.post-control {
+    display: flex;
+}
+
+.new-post {
+    display: flex;
+}
+
+.new-post .form-field-container {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(20px,1em,40px);
+    margin: clamp(20px,1em,40px);
+
+}
+
+.new-post .form-field-container .form-field-text {
+        color: var(--dashboard-text-col);
+        font-size: var(--dashboard-font-size);
+}
+
+.form-field-container label{
+        color: var(--dashboard-text-col);
+        font-size: var(--dashboard-font-size);
+
 }

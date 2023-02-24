@@ -15,9 +15,9 @@ Sleepy Search Login
         </div>
         <a href="forget-account.html" class="text-white">I forgot my username or password.</a>
         <div style="margin:30px 0;">
-            <button type="button" class="grey-button" onClick="window.location.href='my-account.html'">Login</button>
+            <button type="submit" class="grey-button">Login</button>
         </div>
-        <a href="signup.html" class="text-white">Don't have an account? Sign up.</a>
+        <a href="{{ url_for('pages.signup')}}" class="text-white">Don't have an account? Sign up.</a>
     </form>
 </div>
 </div>
