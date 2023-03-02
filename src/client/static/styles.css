@@ -453,3 +453,7 @@ body{
         font-size: var(--dashboard-font-size);
 
 }
+
+.modify-btn a{
+        color: var(--dashboard-bg-col);
+}

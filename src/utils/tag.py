@@ -17,27 +17,21 @@ def make_tag(tag: Tag) -> bool:
 
 def update_tag(tag: Tag) -> bool:
     cur = get_cursor()
-    query = "UPDATE tags SET tag_name = ? WHERE tag_id = ?"
-    args = (tag.tag_name, tag.tag_id)
+    query = "UPDATE tags SET tag_name = :tag_name WHERE tag_id = :tag_id"
+    args = tag
     cur.execute(query, args)
     return True if commit() else False
 
 
-def find_tag_id_by_name(tag: Tag) -> list[Tag]:
+def find_tag_by_name(tag: Tag) -> Tag:
     cur = get_cursor()
-    query = "SELECT DISTINCT tag_id FROM tags WHERE tag_name = ?"
-    args = (tag.tag_name,)
+    query = "SELECT DISTINCT tag_id, tag_name, tag_namespace FROM tags WHERE tag_name = :tag_name"
+    args = tag
     result = cur.execute(query, args)
     ans = []
-    for tags in result.fetchall():
-        ans.append(Tag
-                   (
-                       tags['tag_id'],
-                       tags['tag_name']
-                    )
-                   )
 
-    return ans
+    tag: Tag = result.fetchone()
+    return tag
 
 def is_tag(tag: Tag) -> bool:
-    return True if find_tag_id_by_name(tag) else False
+    return True if find_tag_by_name(tag) else False

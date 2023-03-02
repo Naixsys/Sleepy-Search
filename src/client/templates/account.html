@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+{% if props['user_info'] %}
+<div class="wrapper">
+        <div class="sleepy-form">
+                <p>Username: {{ props['user_info']['account_username'] }}<p>
+                <p>Registered On: {{ props['user_info']['account_created_at'] }}<p>
+                <p>Role: {{ props['user_info']['account_role']}}<p>
+        </div>
+</div>
+{% endif %}
+{% endblock %}

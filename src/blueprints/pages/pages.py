@@ -25,9 +25,14 @@ from utils.post import (
         Post,
         search_posts_by_tag,
         search_post_by_media_id,
+        find_post_tags,
         load_post,
         make_post,
-        assign_post_tag
+        assign_post_tag,
+        make_posts_data_props,
+        make_post_data_tagged,
+        remove_post_all_tags,
+        remove_post
 )
 
 from utils.tag import (
@@ -37,7 +42,8 @@ from utils.tag import (
 from config import (
         about_us,
         content_folder,
-        hash_buffer_size
+        hash_buffer_size,
+        num_preview_tags
 )
 
 pages = Blueprint('pages', __name__)
@@ -147,7 +153,6 @@ def signup():
 
 @pages.route("/dashboard/", methods=['POST', 'GET'])
 def dashboard():
-    print(session['user_info'])
     props = {
             "user_info" : session['user_info'] if session['user_info'] else None,
             }
@@ -241,16 +246,16 @@ def contact():
 def search():
 
     tag : Tag = {
-                 "tag_name": request.args.get("search_text")
+                 "tag_name": request.args.get("search_text").strip().lower()
                  }
 
     posts = search_posts_by_tag(tag)
+    posts = make_posts_data_props(posts, num_preview_tags)
     props = {
             "user_info" : session['user_info'] if 'user_info' in session else None,
             "posts": posts,
             "media_path": content_folder
             }
-    print(posts)
 
     response = render_template('library.html', props=props)
     return response
@@ -264,51 +269,72 @@ def error():
     response = render_template('error.html', props=props)
     return response
 
-@pages.route("/modify_post/<post_id>")
+@pages.route("/modify_post/<post_id>", methods=['POST', 'GET', 'DELETE'])
 def modify_post(post_id: int):
     post : Post = load_post({"post_id": post_id})
-    if(post):
+    if post:
         if request.method == "GET":
             props = {
                 "user_info" : session['user_info'] if 'user_info' in session else None,
-                "post": post,
-                "media_path": content_folder
+                "post": make_post_data_tagged(post)
                 }
+            print(props['post'])
 
             response = render_template('edit-post.html', props=props)
             return response
 
         elif request.method == "POST":
             tags = request.form["tags"]
+            # TODO: Fix hardcoded tag namespace
+            remove_post_all_tags(post)
+            tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
+            for tag in tags:
+                assign_post_tag(post, tag)
+
+            response = redirect(url_for('pages.modify_post', post_id=post['post_id']))
 
     else:
-        pass
+
+        props= {
+                'error': f"Post ID: {post_id} does not exist"
+                }
+        response = render_template('error.html', props=props)
+
+    return response
+@pages.route("/delete_post/<post_id>", methods=["POST"])
+def delete_post(post_id):
+    if(remove_post({"post_id": post_id})):
+        response = redirect(url_for('pages.home'))
+    else:
+        props= {
+                'error': f"Error deleting post with ID: {post_id}"
+                }
+        response = render_template('error.html', props=props)
+
+    return response
 
 @pages.route("/new_post", methods=['POST'])
 def new_post():
-    file = request.files['file']
+    uploaded_file = request.files['file']
     tags = request.form['tags']
-    print(tags)
     description = request.form['description']
     post_creator_id = session['user_info']['account_id']
 
     try:
-        if file:
+        if uploaded_file:
             file_hash = sha512()
+            file_data = b''
             while True:
-                data = file.read(hash_buffer_size)
+                data = uploaded_file.read(hash_buffer_size)
+                file_data += data
                 if not data:
                     break
                 file_hash.update(data)
 
             final_hash = file_hash.hexdigest()
 
-            file.save(
-                        os.path.join(
-                                    content_folder,
-                                    secure_filename(final_hash)
-                                    )
-                    )
+            with open(os.path.join(content_folder, secure_filename(final_hash)), 'wb') as file:
+                file.write(file_data)
 
             post : Post = {
                         "post_creator_id": post_creator_id,
@@ -320,8 +346,7 @@ def new_post():
             if make_post(post):
                 post = search_post_by_media_id(post)
                 # TODO: Fix hardcoded tag namespace
-                tags: list[Tag] = [ {"tag_name": tag.strip(), "tag_namspace": "content" } for tag in tags.split(',') if tag is str]
-                print(tags)
+                tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
                 for tag in tags:
                     assign_post_tag(post, tag)
 
@@ -333,8 +358,8 @@ def new_post():
             return response
 
     except RequestEntityTooLarge:
-        response = make_response("Uploaded file too large.", 413)
+        response = make_response("Uploaded file exceeds file size limit.", 413)
 
-@pages.get("/files/<file_id>")
-def download_files(file_id):
+@pages.get("/file/<file_id>")
+def serve_file(file_id):
     return send_from_directory(content_folder, file_id)

@@ -1,6 +1,5 @@
 from flask import g
 import sqlite3
-from typing import List
 
 
 from config import database_file_path, schema_file_path
