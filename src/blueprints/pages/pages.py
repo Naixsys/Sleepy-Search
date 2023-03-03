@@ -20,6 +20,7 @@ from utils.account import (
         make_account,
         update_account,
         load_account,
+        is_logged_in
 )
 from utils.post import (
         Post,
@@ -108,7 +109,7 @@ def login():
 @pages.get("/logout/")
 def logout():
     props = {
-            "user_info" : session['user_info'] if 'user_info' in session else None,
+            "user_info" : session['user_info'] if is_logged_in(session) else None,
             }
     try:
         if session['user_info']:
@@ -127,7 +128,7 @@ def logout():
 @pages.route("/signup/", methods=['POST', 'GET'])
 def signup():
     props = {
-            "user_info" : session['user_info'] if 'user_info' in session else None,
+            "user_info" : session['user_info'] if is_logged_in(session) else None,
             }
     if request.method == 'POST':
         user = request.form["uname"]
@@ -204,7 +205,7 @@ def account():
         pass
 
     else:
-        if 'user_info' in session:
+        if is_logged_in(session):
             props = {
                     'user_info' : session['user_info'],
                     }
@@ -292,7 +293,7 @@ def modify_post(post_id: int):
             return response
 
         elif request.method == "POST":
-            if 'user_info' in session:
+            if is_logged_in(session):
                 tags = request.form["tags"]
                 description = request.form["description"]
                 if description:
@@ -341,45 +342,57 @@ def new_post():
     description = request.form['description']
     post_creator_id = session['user_info']['account_id']
 
-    try:
-        if uploaded_file:
-            file_hash = sha512()
-            file_data = b''
-            while True:
-                data = uploaded_file.read(hash_buffer_size)
-                file_data += data
-                if not data:
-                    break
-                file_hash.update(data)
+    if is_logged_in(session):
 
-            final_hash = file_hash.hexdigest()
+        try:
+            if uploaded_file:
+                file_hash = sha512()
+                file_data = b''
+                while True:
+                    data = uploaded_file.read(hash_buffer_size)
+                    file_data += data
+                    if not data:
+                        break
+                    file_hash.update(data)
 
-            with open(os.path.join(content_folder, secure_filename(final_hash)), 'wb') as file:
-                file.write(file_data)
+                final_hash = file_hash.hexdigest()
 
-            post : Post = {
-                        "post_creator_id": post_creator_id,
-                        "post_media_id": final_hash,
-                        "post_description": description,
+                with open(os.path.join(content_folder, secure_filename(final_hash)), 'wb') as file:
+                    file.write(file_data)
 
-                    }
+                post : Post = {
+                            "post_creator_id": post_creator_id,
+                            "post_media_id": final_hash,
+                            "post_description": description,
 
-            if make_post(post):
-                post = search_post_by_media_id(post)
-                # TODO: Fix hardcoded tag namespace
-                tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
-                for tag in tags:
-                    assign_post_tag(post, tag)
+                        }
 
-                response = redirect(url_for("pages.home"))
-                return response
+                if make_post(post):
+                    post = search_post_by_media_id(post)
+                    # TODO: Fix hardcoded tag namespace
+                    tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
+                    for tag in tags:
+                        assign_post_tag(post, tag)
+
+                    response = redirect(url_for("pages.home"))
+                    return response
+
+            else:
+                response = make_response("Please select a file to upload", 400)
+
+        except RequestEntityTooLarge:
+            response = make_response("Uploaded file exceeds file size limit.", 413)
 
         else:
-            response = make_response("Please select a file to upload", 400)
-            return response
 
-    except RequestEntityTooLarge:
-        response = make_response("Uploaded file exceeds file size limit.", 413)
+                props= {
+                        'error': f"You need to be logged in order to make a post"
+                       }
+
+                response = render_template('error.html', props=props)
+
+    return response
+
 
 @pages.get("/file/<file_id>")
 def serve_file(file_id):

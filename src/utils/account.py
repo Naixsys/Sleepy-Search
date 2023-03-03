@@ -38,3 +38,6 @@ def update_account(account: Account) -> bool:
     args = account
     cur.execute(query, args)
     return True if commit() else False
+
+def is_logged_in(session) -> bool:
+    return True if 'user_info' in session else False
