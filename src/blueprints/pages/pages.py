@@ -31,6 +31,7 @@ from utils.post import (
         assign_post_tag,
         make_posts_data_props,
         make_post_data_tagged,
+        update_post,
         remove_post_all_tags,
         remove_post
 )
@@ -225,8 +226,12 @@ def about():
 
 @pages.route("/library/")
 def library():
+    posts: Post = search_posts_by_tag()
+    posts = make_posts_data_props(posts, num_preview_tags)
+
     props = {
             "user_info" : session['user_info'] if 'user_info' in session else None,
+            "posts" : posts
             }
 
 
@@ -269,7 +274,7 @@ def error():
     response = render_template('error.html', props=props)
     return response
 
-@pages.route("/modify_post/<post_id>", methods=['POST', 'GET', 'DELETE'])
+@pages.route("/modify_post/<post_id>", methods=['POST', 'GET'])
 def modify_post(post_id: int):
     post : Post = load_post({"post_id": post_id})
     if post:
@@ -278,13 +283,17 @@ def modify_post(post_id: int):
                 "user_info" : session['user_info'] if 'user_info' in session else None,
                 "post": make_post_data_tagged(post)
                 }
-            print(props['post'])
 
             response = render_template('edit-post.html', props=props)
             return response
 
         elif request.method == "POST":
             tags = request.form["tags"]
+            description = request.form["description"]
+            if description:
+                post['post_description'] = description
+                update_post(post)
+
             # TODO: Fix hardcoded tag namespace
             remove_post_all_tags(post)
             tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
@@ -304,7 +313,7 @@ def modify_post(post_id: int):
 @pages.route("/delete_post/<post_id>", methods=["POST"])
 def delete_post(post_id):
     if(remove_post({"post_id": post_id})):
-        response = redirect(url_for('pages.home'))
+        response = redirect(url_for('pages.library'))
     else:
         props= {
                 'error': f"Error deleting post with ID: {post_id}"

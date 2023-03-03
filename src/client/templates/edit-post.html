@@ -15,6 +15,16 @@ Modify Post
                         <p>Tags: </p>
                         <p>{{ props['post']['tags']}}</p>
                 </div>
+                </br>
+                </br>
+                </br>
+                <div>
+                        <p>Description: </p>
+                        <p>{{ props['post']['post_description']}}</p>
+                </div>
+                </br>
+                </br>
+                </br>
                 <!--
 					<div>
 						<select id="category" name="category">
@@ -26,6 +36,9 @@ Modify Post
                 -->
 					<div>
 						<textarea id="tags" name="tags" placeholder="Tags [separate tags with a comma (,)]"></textarea>
+					</div>
+					<div>
+						<textarea id="description" name="description" placeholder="Description...."></textarea>
 					</div>
 					<div style="margin:30px 0;">
 						<button type="submit" class="grey-button">Modify</button>

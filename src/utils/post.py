@@ -23,6 +23,14 @@ def make_post(post: Post) -> bool:
     cur.execute(query, args)
     return True if commit() else False
 
+def update_post(post: Post) -> bool:
+    cur = get_cursor()
+    query = "UPDATE posts SET post_creator_id = :post_creator_id, post_created_at = :post_created_at, post_media_id = :post_media_id, post_description = :post_description"
+    args = post
+    cur.execute(query, args)
+    return True if commit() else False
+
+
 def assign_post_tag(post: Post, tag: Tag) -> bool:
     cur = get_cursor()
     if is_tag(tag):
@@ -59,16 +67,26 @@ def remove_post_all_tags(post: Post) -> bool:
     return True if commit() else False
 
 
-def search_posts_by_tag(tag: Tag) -> list[Post]:
+def search_posts_by_tag(tag=None) -> list[Post]:
     cur = get_cursor()
-    query = """
-    SELECT DISTINCT posts.post_id, posts.post_creator_id, posts.post_media_id, posts.post_description, posts.post_updated_at
-    FROM posts
-    INNER JOIN tagsofposts ON posts.post_id = tagsofposts.post_id
-    WHERE tag_id = (SELECT tag_id FROM tags WHERE tag_name = :tag_name)
-    """
-    args = tag
-    result = cur.execute(query, args)
+    if tag is not None:
+        query = """
+        SELECT DISTINCT posts.post_id, posts.post_creator_id, posts.post_media_id, posts.post_description, posts.post_updated_at
+        FROM posts
+        INNER JOIN tagsofposts ON posts.post_id = tagsofposts.post_id
+        WHERE tag_id = (SELECT tag_id FROM tags WHERE tag_name = :tag_name)
+        """
+        args = tag
+        result = cur.execute(query, args)
+    else:
+        #TODO: Fix hardcoded SQL LIMIT
+        query = """
+        SELECT DISTINCT posts.post_id, posts.post_creator_id, posts.post_media_id, posts.post_description, posts.post_updated_at
+        FROM posts
+        LIMIT 20
+        """
+        result = cur.execute(query)
+
     posts : list[Post] = result.fetchall()
     return posts
 
