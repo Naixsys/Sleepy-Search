@@ -292,19 +292,26 @@ def modify_post(post_id: int):
             return response
 
         elif request.method == "POST":
-            tags = request.form["tags"]
-            description = request.form["description"]
-            if description:
-                post['post_description'] = description
-                update_post(post)
+            if 'user_info' in session:
+                tags = request.form["tags"]
+                description = request.form["description"]
+                if description:
+                    post['post_description'] = description
+                    update_post(post)
 
-            # TODO: Fix hardcoded tag namespace
-            remove_post_all_tags(post)
-            tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
-            for tag in tags:
-                assign_post_tag(post, tag)
+                # TODO: Fix hardcoded tag namespace
+                remove_post_all_tags(post)
+                tags: list[Tag] = [ {"tag_name": tag.lower().strip(), "tag_namespace": "content" } for tag in tags.split(',') ]
+                for tag in tags:
+                    assign_post_tag(post, tag)
 
-            response = redirect(url_for('pages.modify_post', post_id=post['post_id']))
+                response = redirect(url_for('pages.modify_post', post_id=post['post_id']))
+            else:
+                props= {
+                        'error': "You need to be logged in to modify posts!"
+                        }
+                response = render_template('error.html', props=props)
+
 
     else:
 
@@ -314,6 +321,7 @@ def modify_post(post_id: int):
         response = render_template('error.html', props=props)
 
     return response
+
 @pages.route("/delete_post/<post_id>", methods=["POST"])
 def delete_post(post_id):
     if(remove_post({"post_id": post_id})):
