@@ -29,8 +29,11 @@ Sleepy Search
                 {% for post in props['posts']%}
 		        <div class='image-card'>
                         <div class='imgBox'>
-                                <img src="{{post.filepath}}">
-                                <div class='tag-text'>{{post.tags}}</div>
+                                <a href="{{url_for('pages.modify_post', post_id=post['post_id'])}}">
+                                        <img src="{{ url_for('pages.serve_file', file_id=post['post_media_id'])}}">
+                                </a>
+                                <div class='tag-text'>{{ post['post_first_tags']}}</div>
+                                <div class='tag-text modify-btn'><a href="{{url_for('pages.modify_post', post_id=post['post_id'])}}">MODIFY</a></div>
                         </div>
                 </div>
 

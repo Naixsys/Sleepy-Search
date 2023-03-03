@@ -51,8 +51,11 @@ pages = Blueprint('pages', __name__)
 
 @pages.get("/")
 def home():
+    posts: Post = search_posts_by_tag()
+    posts = make_posts_data_props(posts, num_preview_tags)
     props = {
             "user_info" : session['user_info'] if 'user_info' in session else None,
+            "posts": posts
             }
     response = render_template('index.html', props=props)
 
