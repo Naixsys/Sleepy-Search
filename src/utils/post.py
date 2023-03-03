@@ -125,6 +125,19 @@ def find_post_tags(post: Post, num_tags=None) -> dict:
     tags: list[Tag] = result.fetchall()
     return tags
 
+def find_post_creator(post: Post) -> str:
+    cur = get_cursor()
+    query = """
+    SELECT account_username
+    FROM accounts
+    INNER JOIN posts ON posts.post_creator_id = accounts.account_id
+    WHERE posts.post_id = :post_id
+    """
+    args = post
+    result = cur.execute(query, args)
+    post_creator_name : Post = result.fetchone()
+    return post_creator_name
+
 def load_post(post: Post) -> Post:
     cur = get_cursor()
     query = """
@@ -143,5 +156,8 @@ def make_posts_data_props(posts: list[Post], num_preview_tags=None) -> list[Post
     return posts
 
 def make_post_data_tagged(post: Post) -> Post:
-    post = post | {"tags": ', '.join(tag['tag_name'] for tag in  find_post_tags(post)) }
+    post = post | {
+                   "tags": ', '.join(tag['tag_name'] for tag in  find_post_tags(post)),
+                   "poster": find_post_creator(post)['account_username']
+                    }
     return post

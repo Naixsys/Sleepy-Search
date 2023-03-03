@@ -12,10 +12,16 @@ Modify Post
 			<div class="sections right-div">
                     <form action="{{ url_for('pages.modify_post', post_id=props['post']['post_id']) }}" method="POST">
                 <div>
+                        <p>Poster: {{ props['post']['poster']}}</p>
+                </div>
+
+                </br>
+                </br>
+
+                <div>
                         <p>Tags: </p>
                         <p>{{ props['post']['tags']}}</p>
                 </div>
-                </br>
                 </br>
                 </br>
                 <div>
