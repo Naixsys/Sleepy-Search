@@ -91,3 +91,8 @@
 	font-family: koho-light-italic;
 	src: url(assets/fonts/KoHo/KoHo-LightItalic.ttf);
 }
+
+@font-face{
+	font-family: joypixels;
+	src: url(assets/fonts/JoyPixels/JoyPixels.ttf);
+}
