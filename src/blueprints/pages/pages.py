@@ -138,7 +138,8 @@ def signup():
                 })
 
         if make_account(account):
-            user_info = load_account(account).pop("account_password")
+            user_info = load_account(account)
+            user_info.pop("account_password")
             session['user_info'] = user_info
             props['user_info'] = user_info
             response = redirect(url_for('pages.home'))
